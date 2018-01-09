@@ -28,9 +28,7 @@ class Plugin extends \craft\base\Plugin
      * @var Plugin
      */
     public static $plugin;
-
-    public $hasCpSettings = true;
-
+    
     /**
      * @inheritdoc
      */

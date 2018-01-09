@@ -41,5 +41,5 @@ OBJECT_STORAGE_URL="https://(YOUR_APP_NAME).objects.frb.io"
 
 4. Install the plugin
 
-Execute the this command `./craft install/plugin fortrabbit-object-storage` in your terminal or in the Craft CP under Settings > Plugins
+Execute the this command `./craft install/plugin fortrabbit-object-storage` in your terminal to install the plugin or in the Craft CP under Settings > Plugins
 
