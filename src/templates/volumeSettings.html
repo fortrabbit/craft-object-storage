@@ -1,0 +1,28 @@
+
+<h3>Modify your settings in <code>config/volumes.php</code></h3>
+{#
+    Display a table instead of inputs
+#}
+{% if volume.handle %}
+    <table class="data fullwidth fixed-layout">
+        <tbody>
+        {% for label in ['name', 'handle', 'subfolder','keyId','bucket','endpoint','url'] %}
+            <tr>
+                <th class="light">{{ label }}</th>
+                <td>{{ volume[label] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+   <p>Don't setup Object Storage Volumes in the Control Panel.</p>
+{% endif %}
+
+
+
+
+{% js %}
+    if ($('#type').val() == "fortrabbit\\ObjectStorage\\Volume") {
+        $('#assetvolume-settings .field').hide();
+    }
+{% endjs %}

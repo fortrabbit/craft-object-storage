@@ -1,0 +1,36 @@
+{
+  "name": "fortrabbit/craft-object-storage",
+  "description": "A Craft 3 plugin that integrates with fortrabbit's S3 compatible Object Storage",
+  "version": "0.1.0",
+  "type": "craft-plugin",
+  "keywords": [
+    "craftcms",
+    "flysystem",
+    "fortabbit",
+    "object-storage",
+    "plugin",
+    "s3"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Oliver Stark",
+      "homepage": "https://www.fortrabbit.com/"
+    }
+  ],
+  "require": {
+    "craftcms/cms": "^3.0.0-RC4",
+    "league/flysystem-aws-s3-v3": "^1.0.18"
+  },
+  "autoload": {
+    "psr-4": {
+      "fortrabbit\\ObjectStorage\\": "src/"
+    }
+  },
+  "extra": {
+    "name": "fortrabbit Object Storage Volume",
+    "handle": "fortrabbit-object-storage",
+    "changelogUrl": "https://raw.githubusercontent.com/fortrabbit/craft-object-storage/master/CHANGELOG.md",
+    "downloadUrl": "https://github.com/fortrabbit/craft-object-storage/archive/master.zip"
+  }
+}
