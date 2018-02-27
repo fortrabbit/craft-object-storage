@@ -1,6 +1,6 @@
 Changelog
 =========
 
-## 0.1.0 - 2018-01-09
+## 1.0.0 - 2018-02-27
 
-Pre release.
+Initial release
