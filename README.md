@@ -6,7 +6,7 @@ This plugin provides an [Object Storage](https://help.fortrabbit.com/object-stor
 
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-RC4 or later.
+This plugin requires Craft CMS 3.0.0 or later.
 
 
 ## Installation
@@ -33,7 +33,6 @@ OBJECT_STORAGE_KEY="(YOUR_APP_NAME)"
 OBJECT_STORAGE_REGION="(us-east-1|eu-west-1)"
 OBJECT_STORAGE_SECRET="(OBJECT_STORAGE_SECRET)"
 OBJECT_STORAGE_SERVER="objects.(us1|eu2).frbit.com"
-OBJECT_STORAGE_URL="https://(YOUR_APP_NAME).objects.frb.io"
 ```
 
 **3. Install the plugin**
