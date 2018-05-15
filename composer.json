@@ -1,7 +1,7 @@
 {
   "name": "fortrabbit/craft-object-storage",
   "description": "A Craft 3 plugin that integrates with fortrabbit's S3 compatible Object Storage",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "craft-plugin",
   "keywords": [
     "craftcms",
@@ -19,6 +19,7 @@
     }
   ],
   "require": {
+    "php": ">=7.1.0",
     "craftcms/cms": "^3.0.0",
     "league/flysystem-aws-s3-v3": "^1.0.18"
   },
