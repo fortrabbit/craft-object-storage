@@ -18,45 +18,37 @@ use League\Flysystem\AwsS3v3\AwsS3Adapter;
 class Volume extends FlysystemVolume
 {
     /**
-     * @var bool Whether this is a local source or not. Defaults to false.
-     */
-    protected $isVolumeLocal = false;
-
-    /**
      * @var string Subfolder to use
      */
     public $subfolder = '';
-
     /**
      * @var string AWS key ID
      */
     public $keyId = '';
-
     /**
      * @var string AWS key secret
      */
     public $secret = '';
-
     /**
      * @var string Bucket to use
      */
     public $bucket = '';
-
     /**
      * @var string Region to use
      */
     public $region = '';
-
     /**
      * @var string Cache expiration period.
      */
     public $expires = '';
-
     /**
      * @var string API endpoint
      */
     public $endpoint = '';
-
+    /**
+     * @var bool Whether this is a local source or not. Defaults to false.
+     */
+    protected $isVolumeLocal = false;
 
     /**
      * @inheritdoc
@@ -64,6 +56,18 @@ class Volume extends FlysystemVolume
     public static function displayName(): string
     {
         return 'fortrabbit Object Storage';
+    }
+
+    /**
+     * Get the Amazon S3 client.
+     *
+     * @param $config
+     *
+     * @return S3Client
+     */
+    protected static function client(array $config = []): S3Client
+    {
+        return new S3Client($config);
     }
 
     /**
@@ -99,7 +103,6 @@ class Volume extends FlysystemVolume
         ]);
     }
 
-
     /**
      * @inheritdoc
      */
@@ -130,21 +133,13 @@ class Volume extends FlysystemVolume
             ]
         ];
 
-        $client = static::client($config);
+        $client  = static::client($config);
+        $options = [
+            // 100 MB (default was 16MB)
+            'mup_threshold' => 100 * 1024 * 1024
+        ];
 
-        return new AwsS3Adapter($client, $this->bucket, $this->subfolder);
-    }
-
-    /**
-     * Get the Amazon S3 client.
-     *
-     * @param $config
-     *
-     * @return S3Client
-     */
-    protected static function client(array $config = []): S3Client
-    {
-        return new S3Client($config);
+        return new AwsS3Adapter($client, $this->bucket, $this->subfolder, $options);
     }
 
     /**
@@ -162,6 +157,5 @@ class Volume extends FlysystemVolume
 
         return parent::addFileMetadataToConfig($config);
     }
-
 
 }
