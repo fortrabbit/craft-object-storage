@@ -1,7 +1,7 @@
 {
   "name": "fortrabbit/craft-object-storage",
   "description": "A Craft 3 plugin that integrates with fortrabbit's S3 compatible Object Storage",
-  "version": "1.0.3",
+  "version": "1.0.3.1",
   "type": "craft-plugin",
   "keywords": [
     "craftcms",

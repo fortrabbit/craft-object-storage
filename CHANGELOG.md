@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 1.0.3.1 - 2019-03-14
+
+Prevent multipart uploads for files smaller than 100MB (`mup_threshold` was 16MB) by using a custom S3Client class 
+
 ## 1.0.3 - 2019-03-14
 
 Prevent multipart uploads for files smaller than 100MB (`mup_threshold` was 16MB)

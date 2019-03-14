@@ -3,7 +3,6 @@
 namespace fortrabbit\ObjectStorage;
 
 use Aws\Handler\GuzzleV6\GuzzleHandler;
-use Aws\S3\S3Client;
 use Craft;
 use craft\base\FlysystemVolume;
 use craft\helpers\DateTimeHelper;
@@ -134,12 +133,8 @@ class Volume extends FlysystemVolume
         ];
 
         $client  = static::client($config);
-        $options = [
-            // 100 MB (default was 16MB)
-            'mup_threshold' => 100 * 1024 * 1024
-        ];
 
-        return new AwsS3Adapter($client, $this->bucket, $this->subfolder, $options);
+        return new AwsS3Adapter($client, $this->bucket, $this->subfolder);
     }
 
     /**
