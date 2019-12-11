@@ -2,8 +2,8 @@
 $objectStorageAccess = [
     'url'      => "https://" . getenv('OBJECT_STORAGE_HOST'),
     'endpoint' => "https://" . getenv('OBJECT_STORAGE_SERVER'),
-    'keyId'    => getenv('OBJECT_STORAGE_KEY'),
-    'secret'   => getenv('OBJECT_STORAGE_SECRET'),
+    'keyId'    => '$OBJECT_STORAGE_KEY',
+    'secret'   => '$OBJECT_STORAGE_SECRET',
     'bucket'   => getenv('OBJECT_STORAGE_BUCKET'),
     'region'   => getenv('OBJECT_STORAGE_REGION'),
 ];
@@ -21,5 +21,4 @@ return [
     //    'name'      => 'Object Storage Volume 2',
     //    'subfolder' => 'vol2',
     //]),
-
 ];

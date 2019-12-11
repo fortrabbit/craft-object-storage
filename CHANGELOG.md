@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 1.1.0 - 2019-12-11
+
+* Requires at least Craft 3.1
+* Added [Craft::parseEnv()](https://docs.craftcms.com/api/v3/craft.html#public-methods) support for `keyId` and `secret` to prevent storing credentials in the DB and project config
+* Fixed: Added missing `fieldLayoutId` when syncing config
+
 ## 1.0.3.1 - 2019-03-14
 
 Prevent multipart uploads for files smaller than 100MB (`mup_threshold` was 16MB) by using a custom S3Client class 

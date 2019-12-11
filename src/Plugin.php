@@ -2,7 +2,6 @@
 
 namespace fortrabbit\ObjectStorage;
 
-
 use Craft;
 use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterUrlRulesEvent;
@@ -16,14 +15,12 @@ use yii\base\Event;
 use yii\base\InvalidConfigException;
 use yii\console\Application as ConsoleApplication;
 
-
 /**
  * fortrabbit Object Storage plugin
  * provides a fortrabbit\ObjectStorage\Volume
  */
 class Plugin extends \craft\base\Plugin
 {
-
     /**
      * @var Plugin
      */
@@ -50,15 +47,50 @@ class Plugin extends \craft\base\Plugin
             $this->registerRoutes();
         }
 
-        //
+        // Inject a button to the volumes/_index view
         $this->injectSyncButton();
-
 
     }
 
     /**
-     * @return bool
-     * @throws \yii\base\InvalidConfigException
+     * Syncs the config/volumes.yml with DB
+     */
+    public function syncConfig(): bool
+    {
+        $volumesService = Craft::$app->getVolumes();
+        $volumesConfig  = Craft::$app->getConfig()->getConfigFromFile('volumes');
+
+        if (!$volumesConfig) {
+            return false;
+        }
+
+        foreach ($volumesConfig as $handle => $config) {
+
+            /** @var \fortrabbit\ObjectStorage\Volume $existing */
+            $existing = $volumesService->getVolumeByHandle($handle);
+
+            $volume = new Volume(array_merge($config, [
+                'fieldLayoutId' => ($existing) ? $existing->fieldLayoutId : null,
+                'id'            => ($existing) ? $existing->id : null,
+                'handle'        => $handle,
+                'hasUrls'       => true,
+                'sortOrder'     => ($existing) ? $existing->sortOrder : null,
+            ]));
+
+            try {
+                $volumesService->saveVolume($volume, false);
+            } catch (\Throwable $exception) {
+                Craft::warning($exception->getMessage());
+                return false;
+            }
+
+        }
+
+        return true;
+    }
+
+    /**
+     * Is called before the plugin is installed.
      */
     protected function beforeInstall(): bool
     {
@@ -80,23 +112,20 @@ class Plugin extends \craft\base\Plugin
         }
 
         return true;
-
     }
-
 
     /**
      * Is called after the plugin is installed.
      */
-    protected function afterInstall()
+    protected function afterInstall(): void
     {
         $this->syncConfig();
     }
 
     /**
-     *
-     * @param string $message
+     * Shorthand to print a warning
      */
-    protected function warning(string $message)
+    protected function warning(string $message): void
     {
         if (\Craft::$app instanceof ConsoleApplication) {
             ConsoleHelper::error($message);
@@ -142,42 +171,5 @@ class Plugin extends \craft\base\Plugin
                 }
             }
         );
-    }
-
-    /**
-     * @return bool
-     */
-    public function syncConfig()
-    {
-        $volumesService = Craft::$app->getVolumes();
-        $volumesConfig  = Craft::$app->getConfig()->getConfigFromFile('volumes');
-
-        if (!$volumesConfig) {
-           return false;
-        }
-
-        foreach ($volumesConfig as $handle => $config) {
-
-            // Volume exist?
-            $id = ($volume = $volumesService->getVolumeByHandle($handle))
-                ? $volume->id
-                : null;
-
-            $volume = new Volume(array_merge($config, [
-                'id'      => $id,
-                'handle'  => $handle,
-                'hasUrls' => true,
-            ]));
-
-            try {
-                $volumesService->saveVolume($volume, false);
-            } catch (\Throwable $exception) {
-                Craft::warning($exception->getMessage());
-                return false;
-            }
-
-        }
-
-        return true;
     }
 }

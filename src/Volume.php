@@ -13,6 +13,9 @@ use League\Flysystem\AwsS3v3\AwsS3Adapter;
  *
  * @property mixed  $settingsHtml
  * @property string $rootUrl
+ * @property integer $id
+ * @property integer $fieldLayoutId
+ * @property integer $sortOrder
  */
 class Volume extends FlysystemVolume
 {
@@ -127,8 +130,8 @@ class Volume extends FlysystemVolume
             'endpoint'     => $this->endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
             'credentials'  => [
-                'key'    => $this->keyId,
-                'secret' => $this->secret
+                'key'    => Craft::parseEnv($this->keyId),
+                'secret' => Craft::parseEnv($this->secret)
             ]
         ];
 
