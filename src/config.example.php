@@ -6,6 +6,7 @@ $objectStorageAccess = [
     'secret'   => '$OBJECT_STORAGE_SECRET',
     'bucket'   => getenv('OBJECT_STORAGE_BUCKET'),
     'region'   => getenv('OBJECT_STORAGE_REGION'),
+    'usePathStyleEndpoint' => getenv('USE_PATH_STYLE_ENDPOINT'),
 ];
 
 return [

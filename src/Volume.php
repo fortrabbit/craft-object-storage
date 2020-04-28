@@ -48,6 +48,10 @@ class Volume extends FlysystemVolume
      */
     public $endpoint = '';
     /**
+     * @var boolean
+     */
+    public $usePathStyleEndpoint;
+    /**
      * @var bool Whether this is a local source or not. Defaults to false.
      */
     protected $isVolumeLocal = false;
@@ -129,6 +133,7 @@ class Volume extends FlysystemVolume
             'region'       => $this->region,
             'endpoint'     => $this->endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
+            'use_path_style_endpoint' => $this->usePathStyleEndpoint === 'true',
             'credentials'  => [
                 'key'    => Craft::parseEnv($this->keyId),
                 'secret' => Craft::parseEnv($this->secret)
