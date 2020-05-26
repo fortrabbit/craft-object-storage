@@ -13,6 +13,7 @@ return [
     'objectStorageAssets' => array_merge($objectStorageAccess, [
         'name'      => 'Object Storage Assets',
         'subfolder' => 'assets',
+        'type'      => 'fortrabbit\ObjectStorage\Volume',
     ]),
 
     // Define more volumes like this:

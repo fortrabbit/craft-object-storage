@@ -47,6 +47,12 @@ class Volume extends FlysystemVolume
      * @var string API endpoint
      */
     public $endpoint = '';
+
+    /**
+     * @var string this is a helper property, which contains the namespace of the Volume from the config
+     */
+    public $type = '';
+
     /**
      * @var bool Whether this is a local source or not. Defaults to false.
      */
