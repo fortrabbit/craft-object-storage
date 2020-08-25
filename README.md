@@ -39,7 +39,7 @@ OBJECT_STORAGE_SERVER="objects.(us1|eu2).frbit.com"
 
 **3. Install the plugin**
 ```
-./craft install/plugin fortrabbit-object-storage
+./craft plugin/install fortrabbit-object-storage
 ```
 
 Or browse to  CP > Settings > Plugins to enable the plugin.
