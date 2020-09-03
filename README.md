@@ -47,7 +47,4 @@ Or browse to  CP > Settings > Plugins to enable the plugin.
 
 **4. Configure**
 
-The plugin creates a config `volumes.php` file in `/path/to/project/config/`. This is the place to configure your Volumes.
-To apply the changes you need to "Sync" the changes in the CP, under Settings > Assets.
-
-
+Configure volumes on CP > Settings > Assets > Volumes. Use the environment variables in the fields as `$OBJECT_STORAGE_BUCKET` etc.

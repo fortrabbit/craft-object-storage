@@ -88,20 +88,8 @@ class Volume extends FlysystemVolume
      */
     public function getSettingsHtml()
     {
-        $volumesConfig = \Craft::$app->getConfig()->getConfigFromFile('volumes');
-
-        foreach ($volumesConfig as $handle => $config) {
-            if (!isset($config['endpoint'])) {
-                unset($volumesConfig[$handle]);
-            }
-            if ($handle == $this->handle) {
-                unset($volumesConfig[$handle]);
-            }
-        }
-
         return Craft::$app->getView()->renderTemplate('fortrabbit-object-storage/volumeSettings', [
-            'volume'        => $this,
-            'volumesConfig' => $volumesConfig
+            'volume' => $this,
         ]);
     }
 
@@ -126,8 +114,8 @@ class Volume extends FlysystemVolume
     {
         $config = [
             'version'      => 'latest',
-            'region'       => $this->region,
-            'endpoint'     => $this->endpoint,
+            'region'       => Craft::parseEnv($this->region),
+            'endpoint'     => Craft::parseEnv($this->endpoint),
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
             'credentials'  => [
                 'key'    => Craft::parseEnv($this->keyId),
@@ -137,7 +125,7 @@ class Volume extends FlysystemVolume
 
         $client  = static::client($config);
 
-        return new AwsS3Adapter($client, $this->bucket, $this->subfolder);
+        return new AwsS3Adapter($client, Craft::parseEnv($this->bucket), $this->subfolder);
     }
 
     /**
