@@ -51,6 +51,7 @@
     label: "Subfolder"|t('fortrabbit-object-storage'),
     instructions: "If you want to use a bucket’s subfolder as a Volume, specify the path to use here."|t('fortrabbit-object-storage'),
     name: 'subfolder',
+    suggestEnvVars: true,
     value: volume.subfolder,
     errors: volume.getErrors('subfolder'),
     placeholder: "path/to/subfolder"|t('fortrabbit-object-storage')

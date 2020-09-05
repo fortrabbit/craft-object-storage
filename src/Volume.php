@@ -99,7 +99,7 @@ class Volume extends FlysystemVolume
     public function getRootUrl()
     {
         if (($rootUrl = parent::getRootUrl()) !== false && $this->subfolder) {
-            $rootUrl .= rtrim($this->subfolder, '/') . '/';
+            $rootUrl .= rtrim(Craft::parseEnv($this->subfolder), '/') . '/';
         }
 
         return $rootUrl;
@@ -125,7 +125,7 @@ class Volume extends FlysystemVolume
 
         $client  = static::client($config);
 
-        return new AwsS3Adapter($client, Craft::parseEnv($this->bucket), $this->subfolder);
+        return new AwsS3Adapter($client, Craft::parseEnv($this->bucket), Craft::parseEnv($this->subfolder));
     }
 
     /**
