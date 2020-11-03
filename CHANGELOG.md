@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.0.0 - 2020-XX-XX
+
+* Craft 3.5 - config/volume.php deprecation
+
+
 ## 1.1.0 - 2019-12-11
 
 * Requires at least Craft 3.1
