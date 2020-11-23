@@ -56,7 +56,7 @@ Or browse to  CP > Settings > Plugins to enable the plugin.
 **4. Configure**
 
 Configure volumes on CP > Settings > Assets > Volumes. 
-``
+
 Select `fortrabbit Object Storage` as Volume Type and for the Base URL field use `$OBJECT_STORAGE_HOST`. 
 All other fields are pre-configured with ENV vars already. 
 
