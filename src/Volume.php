@@ -88,20 +88,8 @@ class Volume extends FlysystemVolume
      */
     public function getSettingsHtml()
     {
-        $volumesConfig = \Craft::$app->getConfig()->getConfigFromFile('volumes');
-
-        foreach ($volumesConfig as $handle => $config) {
-            if (!isset($config['endpoint'])) {
-                unset($volumesConfig[$handle]);
-            }
-            if ($handle == $this->handle) {
-                unset($volumesConfig[$handle]);
-            }
-        }
-
         return Craft::$app->getView()->renderTemplate('fortrabbit-object-storage/volumeSettings', [
-            'volume'        => $this,
-            'volumesConfig' => $volumesConfig
+            'volume' => $this,
         ]);
     }
 
@@ -110,8 +98,14 @@ class Volume extends FlysystemVolume
      */
     public function getRootUrl()
     {
-        if (($rootUrl = parent::getRootUrl()) !== false && $this->subfolder) {
-            $rootUrl .= rtrim($this->subfolder, '/') . '/';
+        $rootUrl = parent::getRootUrl();
+
+        if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
+            $rootUrl =  'https://' . Craft::parseEnv('$OBJECT_STORAGE_HOST') . '/';
+        }
+
+        if ($rootUrl && $this->subfolder) {
+            $rootUrl .= rtrim(Craft::parseEnv($this->subfolder), '/') . '/';
         }
 
         return $rootUrl;
@@ -124,10 +118,16 @@ class Volume extends FlysystemVolume
      */
     protected function createAdapter()
     {
+        $endpoint = Craft::parseEnv($this->endpoint);
+
+        if (strpos($endpoint, 'https') === false) {
+            $endpoint = 'https://' .  $endpoint;
+        }
+
         $config = [
             'version'      => 'latest',
-            'region'       => $this->region,
-            'endpoint'     => $this->endpoint,
+            'region'       => Craft::parseEnv($this->region),
+            'endpoint'     => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
             'credentials'  => [
                 'key'    => Craft::parseEnv($this->keyId),
@@ -137,7 +137,7 @@ class Volume extends FlysystemVolume
 
         $client  = static::client($config);
 
-        return new AwsS3Adapter($client, $this->bucket, $this->subfolder);
+        return new AwsS3Adapter($client, Craft::parseEnv($this->bucket), Craft::parseEnv($this->subfolder));
     }
 
     /**

@@ -1,28 +1,66 @@
+{% import "_includes/forms" as forms %}
 
-<h3>Modify your settings in <code>config/volumes.php</code></h3>
-{#
-    Display a table instead of inputs
-#}
-{% if volume.handle %}
-    <table class="data fullwidth fixed-layout">
-        <tbody>
-        {% for label in ['name', 'handle', 'subfolder','keyId','bucket','endpoint','url'] %}
-            <tr>
-                <th class="light">{{ label }}</th>
-                <td>{{ volume[label] }}</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-{% else %}
-   <p>Don't setup Object Storage Volumes in the Control Panel.</p>
-{% endif %}
+{{ forms.autosuggestField({
+    label: "Server API endpoint"|t('fortrabbit-object-storage'),
+    id: 'endpoint',
+    name: 'endpoint',
+    suggestEnvVars: true,
+    value: volume.endpoint|default('$OBJECT_STORAGE_SERVER'),
+    errors: volume.getErrors('endpoint'),
+    placeholder: '$OBJECT_STORAGE_SERVER'|t('fortrabbit-object-storage'),
+}) }}
 
+{{ forms.autosuggestField({
+    label: "Region"|t('fortrabbit-object-storage'),
+    instructions: 'Region to use'|t('fortrabbit-object-storage'),
+    id: 'region',
+    name: 'region',
+    suggestEnvVars: true,
+    value: volume.region|default('$OBJECT_STORAGE_REGION'),
+    errors: volume.getErrors('region'),
+    placeholder: '$OBJECT_STORAGE_REGION'|t('fortrabbit-object-storage'),
+}) }}
 
+{{ forms.autosuggestField({
+    label: "Access Key ID (your App name)"|t('fortrabbit-object-storage'),
+    id: 'keyId',
+    name: 'keyId',
+    suggestEnvVars: true,
+    value: volume.keyId|default('$OBJECT_STORAGE_KEY'),
+    errors: volume.getErrors('keyId'),
+}) }}
 
+{{ forms.autosuggestField({
+    label: "Secret Access Key"|t('fortrabbit-object-storage'),
+    id: 'secret',
+    name: 'secret',
+    suggestEnvVars: true,
+    value: volume.secret|default('$OBJECT_STORAGE_SECRET'),
+    errors: volume.getErrors('secret'),
+}) }}
 
-{% js %}
-    if ($('#type').val() == "fortrabbit\\ObjectStorage\\Volume") {
-        $('#assetvolume-settings .field').hide();
-    }
-{% endjs %}
+{{ forms.autosuggestField({
+    label: "Bucket (your App name)"|t('fortrabbit-object-storage'),
+    name: 'bucket',
+    suggestEnvVars: true,
+    value: volume.bucket|default('$OBJECT_STORAGE_BUCKET'),
+    errors: volume.getErrors('bucket'),
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Subfolder"|t('fortrabbit-object-storage'),
+    instructions: "If you want to use a bucket’s subfolder as a Volume, specify the path to use here."|t('fortrabbit-object-storage'),
+    name: 'subfolder',
+    suggestEnvVars: true,
+    value: volume.subfolder,
+    errors: volume.getErrors('subfolder'),
+    placeholder: "path/to/subfolder"|t('fortrabbit-object-storage')
+}) }}
+
+{{ forms.autosuggestField({
+    label: "Expires"|t('fortrabbit-object-storage'),
+    instructions: "Cache expiration period."|t('fortrabbit-object-storage'),
+    name: 'expires',
+    value: volume.expires,
+    errors: volume.getErrors('expires'),
+}) }}
