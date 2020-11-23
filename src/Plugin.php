@@ -3,6 +3,7 @@
 namespace fortrabbit\ObjectStorage;
 
 use Craft;
+use craft\console\controllers\SetupController;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Volumes;
 use yii\base\Event;
@@ -25,6 +26,11 @@ class Plugin extends \craft\base\Plugin
     {
         self::$plugin = $this;
         parent::init();
+
+
+        \Craft::$app->controllerMap['setup'] = [
+            'class' => SetupController::class,
+        ];
 
         Event::on(
             Volumes::class,

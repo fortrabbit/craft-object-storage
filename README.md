@@ -26,7 +26,13 @@ composer require fortrabbit/craft-object-storage
 
 **2. Update your local .env file** 
 
-Learn how to [access credentials](https://help.fortrabbit.com/object-storage#toc-obtaining-credentials) on fortrabbit.
+Run this command in the terminal update your .env automatically:
+
+```
+./vendor/bin/object-storage-init {your-app}
+```
+
+If it fails for some reason update your .env file manually. Learn how to [access credentials](https://help.fortrabbit.com/object-storage#toc-obtaining-credentials) on fortrabbit.
 
 ```
 OBJECT_STORAGE_BUCKET="(YOUR_APP_NAME)"
@@ -36,6 +42,8 @@ OBJECT_STORAGE_REGION="(us-east-1|eu-west-1)"
 OBJECT_STORAGE_SECRET="(OBJECT_STORAGE_SECRET)"
 OBJECT_STORAGE_SERVER="objects.(us1|eu2).frbit.com"
 ```
+
+
 
 **3. Install the plugin**
 ```

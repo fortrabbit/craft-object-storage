@@ -1,10 +1,11 @@
 Changelog
 =========
 
-## 2.0.0 - 2020-XX-XX
+## 2.0.0 - 2020-11-23
 
 * Craft 3.5 - config/volume.php deprecation
-
+* Settings fields use ENV vars by default
+* New command to generate .env config `php vendor/bin/object-storage-init`
 
 ## 1.1.0 - 2019-12-11
 

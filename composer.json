@@ -21,7 +21,8 @@
   "require": {
     "php": ">=7.1.0",
     "craftcms/cms": "^3.5.8",
-    "league/flysystem-aws-s3-v3": "^1.0.18"
+    "league/flysystem-aws-s3-v3": "^1.0.18",
+    "symfony/console": "^5.1"
   },
   "autoload": {
     "psr-4": {
@@ -33,5 +34,8 @@
     "handle": "fortrabbit-object-storage",
     "changelogUrl": "https://raw.githubusercontent.com/fortrabbit/craft-object-storage/master/CHANGELOG.md",
     "downloadUrl": "https://github.com/fortrabbit/craft-object-storage/archive/master.zip"
-  }
+  },
+  "bin": [
+    "bin/object-storage-init"
+  ]
 }

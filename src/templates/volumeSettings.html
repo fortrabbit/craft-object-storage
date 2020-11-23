@@ -5,9 +5,9 @@
     id: 'endpoint',
     name: 'endpoint',
     suggestEnvVars: true,
-    value: volume.endpoint,
+    value: volume.endpoint|default('$OBJECT_STORAGE_ENDPOINT'),
     errors: volume.getErrors('endpoint'),
-    placeholder: 'https://objects.(us1|eu2).frbit.com'|t('fortrabbit-object-storage'),
+    placeholder: '$OBJECT_STORAGE_ENDPOINT'|t('fortrabbit-object-storage'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -16,17 +16,17 @@
     id: 'region',
     name: 'region',
     suggestEnvVars: true,
-    value: volume.region,
+    value: volume.region|default('$OBJECT_STORAGE_REGION'),
     errors: volume.getErrors('region'),
-    placeholder: '(us-east-1|eu-west-1)'|t('fortrabbit-object-storage'),
+    placeholder: '$OBJECT_STORAGE_REGION'|t('fortrabbit-object-storage'),
 }) }}
 
 {{ forms.autosuggestField({
-    label: "Access Key ID"|t('fortrabbit-object-storage'),
+    label: "Access Key ID (your App name)"|t('fortrabbit-object-storage'),
     id: 'keyId',
     name: 'keyId',
     suggestEnvVars: true,
-    value: volume.keyId,
+    value: volume.keyId|default('$OBJECT_STORAGE_KEY'),
     errors: volume.getErrors('keyId'),
 }) }}
 
@@ -35,15 +35,15 @@
     id: 'secret',
     name: 'secret',
     suggestEnvVars: true,
-    value: volume.secret,
+    value: volume.secret|default('$OBJECT_STORAGE_SECRET'),
     errors: volume.getErrors('secret'),
 }) }}
 
 {{ forms.autosuggestField({
-    label: "Bucket"|t('fortrabbit-object-storage'),
+    label: "Bucket (your App name)"|t('fortrabbit-object-storage'),
     name: 'bucket',
     suggestEnvVars: true,
-    value: volume.bucket,
+    value: volume.bucket|default('$OBJECT_STORAGE_BUCKET'),
     errors: volume.getErrors('bucket'),
 }) }}
 
