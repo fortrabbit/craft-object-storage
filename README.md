@@ -6,8 +6,7 @@ This plugin provides an [Object Storage](https://help.fortrabbit.com/object-stor
 
 ## Requirements
 
-This plugin requires Craft CMS 3.1 and PHP 7.1 or later. There is another plugin to provide this for Craft 2 over [here](https://github.com/fortrabbit/craft-s3-fortrabbit).
-
+The 2.0 branch of this plugin requires Craft CMS 3.5 and PHP 7.3 or later. 
 
 
 ## Installation
@@ -15,7 +14,7 @@ This plugin requires Craft CMS 3.1 and PHP 7.1 or later. There is another plugin
 To install the plugin, follow these instructions.
 
 
-**1. Intall the plugin via composer**
+**1. Install the plugin via composer**
 
 ```
 cd /path/to/project
@@ -55,9 +54,9 @@ Or browse to  CP > Settings > Plugins to enable the plugin.
 
 **4. Configure**
 
-Configure volumes on CP > Settings > Assets > Volumes. 
+Configure volumes under: Settings > Assets > **[New Volume]**.  
 
-Select `fortrabbit Object Storage` as Volume Type and for the Base URL field use `$OBJECT_STORAGE_HOST`. 
+Select `fortrabbit Object Storage` as Volume Type and for the Base URL field use `$OBJECT_STORAGE_HOST` ENV variable. 
 All other fields are pre-configured with ENV vars already. 
 
 

@@ -6,6 +6,7 @@ Changelog
 * Craft 3.5 - config/volume.php deprecation
 * Settings fields use ENV vars by default
 * New command to generate .env config `php vendor/bin/object-storage-init`
+* Requires PHP 7.3 or higher
 
 ## 1.1.0 - 2019-12-11
 
