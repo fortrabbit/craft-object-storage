@@ -5,9 +5,9 @@
     id: 'endpoint',
     name: 'endpoint',
     suggestEnvVars: true,
-    value: volume.endpoint|default('$OBJECT_STORAGE_ENDPOINT'),
+    value: volume.endpoint|default('$OBJECT_STORAGE_SERVER'),
     errors: volume.getErrors('endpoint'),
-    placeholder: '$OBJECT_STORAGE_ENDPOINT'|t('fortrabbit-object-storage'),
+    placeholder: '$OBJECT_STORAGE_SERVER'|t('fortrabbit-object-storage'),
 }) }}
 
 {{ forms.autosuggestField({

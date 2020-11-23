@@ -98,7 +98,13 @@ class Volume extends FlysystemVolume
      */
     public function getRootUrl()
     {
-        if (($rootUrl = parent::getRootUrl()) !== false && $this->subfolder) {
+        $rootUrl = parent::getRootUrl();
+
+        if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
+            $rootUrl =  'https://' . Craft::parseEnv('$OBJECT_STORAGE_HOST') . '/';
+        }
+
+        if ($rootUrl && $this->subfolder) {
             $rootUrl .= rtrim(Craft::parseEnv($this->subfolder), '/') . '/';
         }
 
@@ -112,10 +118,16 @@ class Volume extends FlysystemVolume
      */
     protected function createAdapter()
     {
+        $endpoint = Craft::parseEnv($this->endpoint);
+
+        if (strpos($endpoint, 'https') === false) {
+            $endpoint = 'https://' .  $endpoint;
+        }
+
         $config = [
             'version'      => 'latest',
             'region'       => Craft::parseEnv($this->region),
-            'endpoint'     => Craft::parseEnv($this->endpoint),
+            'endpoint'     => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
             'credentials'  => [
                 'key'    => Craft::parseEnv($this->keyId),
