@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.1.0 - 2021-03-03
+
+* Allow PHP ^8.0
+* Remove `version` from composer.json (better rely on tags)
+
 ## 2.0.0 - 2020-11-23
 
 * Craft 3.5 - config/volume.php deprecation
