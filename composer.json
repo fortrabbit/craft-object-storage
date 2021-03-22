@@ -21,6 +21,7 @@
     "php": "^7.3.0|^8.0",
     "craftcms/cms": "^3.5.15",
     "league/flysystem-aws-s3-v3": "^1.0.18",
+    "aws/aws-sdk-php": "<= 3.173.23",
     "symfony/console": "^5.1"
   },
   "autoload": {

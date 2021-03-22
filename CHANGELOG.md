@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## 2.1.X - 2021-03-22
+* require `aws/aws-sdk-php` and use fixed version: `3.173.23` 
+
 ## 2.1.0 - 2021-03-03
 
 * Allow PHP ^8.0
