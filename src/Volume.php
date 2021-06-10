@@ -120,10 +120,6 @@ class Volume extends FlysystemVolume
     {
         $endpoint = Craft::parseEnv($this->endpoint);
 
-        if (strpos($endpoint, 'https') === false) {
-            $endpoint = 'https://' .  $endpoint;
-        }
-
         $config = [
             'version'      => 'latest',
             'region'       => Craft::parseEnv($this->region),
