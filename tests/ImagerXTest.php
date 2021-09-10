@@ -1,10 +1,8 @@
 <?php
 
-use fortrabbit\ObjectStorage\Helper;
 use fortrabbit\ObjectStorage\ImagerXExternalStorage;
 use spacecatninja\imagerx\events\RegisterExternalStoragesEvent;
 use spacecatninja\imagerx\ImagerX;
-use yii\base\BaseObject;
 use yii\base\Event;
 
 test('imagerx class name did not change', function () {
@@ -31,6 +29,6 @@ test('external storage is registered using event', function () {
         $event
     );
 
-    $class = $event->storages['object-storage'];
+    $class = $event->storages['fortrabbit-object-storage'];
     expect($class)->toBe(ImagerXExternalStorage::class);
 });

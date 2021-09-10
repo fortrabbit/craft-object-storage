@@ -2,18 +2,19 @@
 
 namespace fortrabbit\ObjectStorage;
 
+use craft\base\VolumeInterface;
+use craft\errors\InvalidVolumeException;
 use craft\errors\VolumeException;
 use craft\errors\VolumeObjectExistsException;
 use craft\helpers\FileHelper;
 use spacecatninja\imagerx\externalstorage\ImagerStorageInterface;
 use yii\base\Event;
-use yii\di\NotInstantiableException;
 
 class ImagerXExternalStorage implements ImagerStorageInterface
 {
     public const IMAGERX_PLUGIN_CLASS = "spacecatninja\\imagerx\\ImagerX";
     public const IMAGERX_REGISTER_EXTERNAL_STORAGES_EVENT = "imagerxRegisterExternalStorages";
-    public const NAME = "object-storage";
+    public const NAME = "fortrabbit-object-storage";
 
     public static function register()
     {
@@ -38,13 +39,35 @@ class ImagerXExternalStorage implements ImagerStorageInterface
 
         try {
             $config = [];
-            $volume = \Craft::$container->get(Volume::class);
+            $volume = self::getVolume($settings['volume'] ?? null);
             $volume->createFileByStream($uri, fopen($file, 'rb') , $config);
-        } catch (NotInstantiableException | VolumeException | VolumeObjectExistsException $e) {
+        } catch (InvalidVolumeException | VolumeException | VolumeObjectExistsException $e) {
             \Craft::error($e->getMessage(), 'fortrabbit-object-storage');
             return false;
         }
 
         return true;
+    }
+
+
+    /**
+     * @throws \craft\errors\InvalidVolumeException
+     */
+    protected static function getVolume(string $handle = null):  VolumeInterface
+    {
+        $volumeService = \Craft::$app->getVolumes();
+
+        if ($handle) {
+            return $volumeService->getVolumeByHandle($handle);
+        }
+
+        // pick the fist one
+        foreach ($volumeService->getAllVolumes() as $volume) {
+            if (get_class($volume) === Volume::class) {
+                return $volume;
+            }
+        }
+
+        throw new InvalidVolumeException();
     }
 }
