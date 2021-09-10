@@ -36,5 +36,12 @@
   },
   "bin": [
     "bin/object-storage-init"
-  ]
+  ],
+  "require-dev": {
+    "spacecatninja/imager-x": "^3.5",
+    "pestphp/pest": "^1.18"
+  },
+  "suggest": {
+    "spacecatninja/imager-x": "(optional) This plugin integrates with Imager X."
+  }
 }
