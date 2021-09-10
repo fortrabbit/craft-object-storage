@@ -13,6 +13,10 @@ class ImagerXDrive implements ImagerStorageInterface
 
     public static function register()
     {
+        if (!class_exists(ImagerXDrive::IMAGERX_PLUGIN_CLASS)) {
+            return;
+        }
+
         Event::on(ImagerXDrive::IMAGERX_PLUGIN_CLASS,
             ImagerXDrive::IMAGERX_REGISTER_EXTERNAL_STORAGES_EVENT,
             static function (\spacecatninja\imagerx\events\RegisterExternalStoragesEvent $event) {
