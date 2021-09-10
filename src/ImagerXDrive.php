@@ -2,8 +2,12 @@
 
 namespace fortrabbit\ObjectStorage;
 
+use craft\errors\VolumeException;
+use craft\errors\VolumeObjectExistsException;
+use craft\helpers\FileHelper;
 use spacecatninja\imagerx\externalstorage\ImagerStorageInterface;
 use yii\base\Event;
+use yii\di\NotInstantiableException;
 
 class ImagerXDrive implements ImagerStorageInterface
 {
@@ -25,8 +29,22 @@ class ImagerXDrive implements ImagerStorageInterface
         );
     }
 
-    public static function upload(string $file, string $uri, bool $isFinal, array $settings)
+
+    public static function upload(string $file, string $uri, bool $isFinal, array $settings): bool
     {
-        // TODO: Implement upload() method.
+        if (isset($settings['folder']) && $settings['folder'] !== '') {
+            $uri = FileHelper::normalizePath($settings['folder'].'/'.$uri);
+        }
+
+        try {
+            $config = [];
+            $volume = \Craft::$container->get(Volume::class);
+            $volume->createFileByStream($uri, fopen($file, 'rb') , $config);
+        } catch (NotInstantiableException | VolumeException | VolumeObjectExistsException $e) {
+            \Craft::error($e->getMessage(), 'fortrabbit-object-storage');
+            return false;
+        }
+
+        return true;
     }
 }
