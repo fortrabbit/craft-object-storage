@@ -22,7 +22,7 @@ class Plugin extends \craft\base\Plugin
         parent::init();
 
         Volume::register();
-        ImagerXDrive::register();
+        ImagerXExternalStorage::register();
     }
 
 }

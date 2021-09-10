@@ -9,7 +9,7 @@ use spacecatninja\imagerx\externalstorage\ImagerStorageInterface;
 use yii\base\Event;
 use yii\di\NotInstantiableException;
 
-class ImagerXDrive implements ImagerStorageInterface
+class ImagerXExternalStorage implements ImagerStorageInterface
 {
     public const IMAGERX_PLUGIN_CLASS = "spacecatninja\\imagerx\\ImagerX";
     public const IMAGERX_REGISTER_EXTERNAL_STORAGES_EVENT = "imagerxRegisterExternalStorages";
@@ -17,14 +17,14 @@ class ImagerXDrive implements ImagerStorageInterface
 
     public static function register()
     {
-        if (!class_exists(ImagerXDrive::IMAGERX_PLUGIN_CLASS)) {
+        if (!class_exists(ImagerXExternalStorage::IMAGERX_PLUGIN_CLASS)) {
             return;
         }
 
-        Event::on(ImagerXDrive::IMAGERX_PLUGIN_CLASS,
-            ImagerXDrive::IMAGERX_REGISTER_EXTERNAL_STORAGES_EVENT,
+        Event::on(ImagerXExternalStorage::IMAGERX_PLUGIN_CLASS,
+            ImagerXExternalStorage::IMAGERX_REGISTER_EXTERNAL_STORAGES_EVENT,
             static function (\spacecatninja\imagerx\events\RegisterExternalStoragesEvent $event) {
-                $event->storages[ImagerXDrive::NAME] = ImagerXDrive::class;
+                $event->storages[ImagerXExternalStorage::NAME] = ImagerXExternalStorage::class;
             }
         );
     }
