@@ -21,8 +21,8 @@ class Plugin extends \craft\base\Plugin
     {
         parent::init();
 
-        Helper::registerVolumeType();
-        Helper::registerImagerXStorage();
+        Volume::register();
+        ImagerXDrive::register();
     }
 
 }

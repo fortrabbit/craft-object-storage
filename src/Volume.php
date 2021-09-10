@@ -5,8 +5,11 @@ namespace fortrabbit\ObjectStorage;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 use Craft;
 use craft\base\FlysystemVolume;
+use craft\events\RegisterComponentTypesEvent;
 use craft\helpers\DateTimeHelper;
+use craft\services\Volumes;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use yii\base\Event;
 
 /**
  * Class Volume
@@ -70,6 +73,17 @@ class Volume extends FlysystemVolume
     protected static function client(array $config = []): S3Client
     {
         return new S3Client($config);
+    }
+
+    public static function register()
+    {
+        Event::on(
+            Volumes::class,
+            Volumes::EVENT_REGISTER_VOLUME_TYPES,
+            function (RegisterComponentTypesEvent $event) {
+                $event->types[] = Volume::class;
+            }
+        );
     }
 
     /**
