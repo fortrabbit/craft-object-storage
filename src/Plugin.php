@@ -15,29 +15,14 @@ use yii\base\Event;
 class Plugin extends \craft\base\Plugin
 {
     /**
-     * @var Plugin
-     */
-    public static $plugin;
-
-    /**
      * @inheritdoc
      */
     public function init()
     {
-        self::$plugin = $this;
         parent::init();
 
-
-        \Craft::$app->controllerMap['setup'] = [
-            'class' => SetupController::class,
-        ];
-
-        Event::on(
-            Volumes::class,
-            Volumes::EVENT_REGISTER_VOLUME_TYPES,
-            function (RegisterComponentTypesEvent $event) {
-                $event->types[] = Volume::class;
-            }
-        );
+        Helper::registerVolumeType();
+        Helper::registerImagerXStorage();
     }
+
 }
