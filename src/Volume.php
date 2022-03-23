@@ -120,15 +120,16 @@ class Volume extends FlysystemVolume
     {
         $endpoint = Craft::parseEnv($this->endpoint);
 
-        if (strpos($endpoint, 'https') === false) {
-            $endpoint = 'https://' .  $endpoint;
-        }
+//        if (strpos($endpoint, 'https') === false) {
+//            $endpoint = 'https://' .  $endpoint;
+//        }
 
         $config = [
             'version'      => 'latest',
             'region'       => Craft::parseEnv($this->region),
             'endpoint'     => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
+            'use_path_style_endpoint' => true,
             'credentials'  => [
                 'key'    => Craft::parseEnv($this->keyId),
                 'secret' => Craft::parseEnv($this->secret)
