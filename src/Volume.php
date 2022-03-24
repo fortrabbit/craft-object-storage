@@ -5,8 +5,13 @@ namespace fortrabbit\ObjectStorage;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 use Craft;
 use craft\base\FlysystemVolume;
+use craft\helpers\App;
 use craft\helpers\DateTimeHelper;
 use League\Flysystem\AwsS3v3\AwsS3Adapter;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
+use yii\base\Exception;
 
 /**
  * Class Volume
@@ -63,7 +68,7 @@ class Volume extends FlysystemVolume
     /**
      * Get the Amazon S3 client.
      *
-     * @param $config
+     * @param array $config
      *
      * @return S3Client
      */
@@ -75,7 +80,7 @@ class Volume extends FlysystemVolume
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         $rules   = parent::rules();
         $rules[] = [['bucket', 'keyId', 'secret', 'endpoint'], 'required'];
@@ -86,26 +91,36 @@ class Volume extends FlysystemVolume
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
-        return Craft::$app->getView()->renderTemplate('fortrabbit-object-storage/volumeSettings', [
-            'volume' => $this,
-        ]);
+        try {
+            return Craft::$app->getView()->renderTemplate('fortrabbit-object-storage/volumeSettings', [
+                'volume' => $this,
+            ]);
+        } catch (LoaderError | RuntimeError | SyntaxError | Exception $e) {
+            Craft::error([
+                'error' => [
+                    'code' => $e->getCode(),
+                    'message' => $e->getMessage()
+                ], 'craft-object-storage'
+            ]);
+        }
+        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function getRootUrl()
+    public function getRootUrl(): string
     {
         $rootUrl = parent::getRootUrl();
 
         if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
-            $rootUrl =  'https://' . Craft::parseEnv('$OBJECT_STORAGE_HOST') . '/';
+            $rootUrl =  'https://' . App::env('$OBJECT_STORAGE_HOST') . '/';
         }
 
         if ($rootUrl && $this->subfolder) {
-            $rootUrl .= rtrim(Craft::parseEnv($this->subfolder), '/') . '/';
+            $rootUrl .= rtrim(App::env($this->subfolder), '/') . '/';
         }
 
         return $rootUrl;
@@ -116,29 +131,29 @@ class Volume extends FlysystemVolume
      *
      * @return AwsS3Adapter
      */
-    protected function createAdapter()
+    protected function createAdapter(): AwsS3Adapter
     {
-        $endpoint = Craft::parseEnv($this->endpoint);
+        $endpoint = App::env($this->endpoint);
 
-//        if (strpos($endpoint, 'https') === false) {
-//            $endpoint = 'https://' .  $endpoint;
-//        }
+        if(!(str_contains($endpoint, 'https') || str_contains($endpoint, 'http'))) {
+            $endpoint = 'https://' .  $endpoint;
+        }
 
         $config = [
             'version'      => 'latest',
-            'region'       => Craft::parseEnv($this->region),
+            'region'       => App::env($this->region),
             'endpoint'     => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
             'use_path_style_endpoint' => true,
             'credentials'  => [
-                'key'    => Craft::parseEnv($this->keyId),
-                'secret' => Craft::parseEnv($this->secret)
+                'key'    => App::env($this->keyId),
+                'secret' => App::env($this->secret)
             ]
         ];
 
         $client  = static::client($config);
 
-        return new AwsS3Adapter($client, Craft::parseEnv($this->bucket), Craft::parseEnv($this->subfolder));
+        return new AwsS3Adapter($client, App::env($this->bucket), App::env($this->subfolder));
     }
 
     /**

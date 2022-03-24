@@ -9,7 +9,7 @@ namespace fortrabbit\ObjectStorage;
  */
 class S3Client extends \Aws\S3\S3Client
 {
-    const DEFAULT_MULTIPART_THRESHOLD = 100000000;
+    public const DEFAULT_MULTIPART_THRESHOLD = 100000000;
 
     /**
      * @see S3ClientInterface::upload()

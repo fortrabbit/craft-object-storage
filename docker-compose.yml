@@ -1,0 +1,7 @@
+version: "3.8"
+
+services:
+  php:
+    image: registry.d-art-digital.de/development/docker/craft-container:8.0-apache-buster
+    volumes:
+      - .:/var/www/html
