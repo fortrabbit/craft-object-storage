@@ -116,11 +116,11 @@ class Volume extends FlysystemVolume
         $rootUrl = parent::getRootUrl();
 
         if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
-            $rootUrl =  'https://' . App::env('$OBJECT_STORAGE_HOST') . '/';
+            $rootUrl =  'https://' . App::parseEnv('$OBJECT_STORAGE_HOST') . '/';
         }
 
         if ($rootUrl && $this->subfolder) {
-            $rootUrl .= rtrim(App::env($this->subfolder), '/') . '/';
+            $rootUrl .= rtrim(App::parseEnv($this->subfolder), '/') . '/';
         }
 
         return $rootUrl;
@@ -133,27 +133,27 @@ class Volume extends FlysystemVolume
      */
     protected function createAdapter(): AwsS3Adapter
     {
-        $endpoint = App::env($this->endpoint);
+        $endpoint = App::parseEnv($this->endpoint);
 
         if(!(str_contains($endpoint, 'https') || str_contains($endpoint, 'http'))) {
             $endpoint = 'https://' .  $endpoint;
         }
 
         $config = [
-            'version'      => 'latest',
-            'region'       => App::env($this->region),
-            'endpoint'     => $endpoint,
+            'version' => 'latest',
+            'region' => App::parseEnv($this->region),
+            'endpoint' => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
-            'use_path_style_endpoint' => true,
-            'credentials'  => [
-                'key'    => App::env($this->keyId),
-                'secret' => App::env($this->secret)
+            'use_path_style_endpoint' => App::parseEnv('OBJECT_STORAGE_PATH_STYLE') === 'true',
+            'credentials' => [
+                'key' => App::parseEnv($this->keyId),
+                'secret' => App::parseEnv($this->secret)
             ]
         ];
 
         $client  = static::client($config);
 
-        return new AwsS3Adapter($client, App::env($this->bucket), App::env($this->subfolder));
+        return new AwsS3Adapter($client, App::parseEnv($this->bucket), App::parseEnv($this->subfolder));
     }
 
     /**
@@ -163,9 +163,9 @@ class Volume extends FlysystemVolume
     {
         if (!empty($this->expires) && DateTimeHelper::isValidIntervalString($this->expires)) {
             $expires = new \DateTime();
-            $now     = new \DateTime();
+            $now = new \DateTime();
             $expires->modify('+' . $this->expires);
-            $diff                   = $expires->format('U') - $now->format('U');
+            $diff = $expires->format('U') - $now->format('U');
             $config['CacheControl'] = 'max-age=' . $diff . ', must-revalidate';
         }
 

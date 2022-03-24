@@ -22,20 +22,20 @@ class Plugin extends \craft\base\Plugin
     /**
      * @inheritdoc
      */
-    public function init()
+    public function init(): void
     {
         self::$plugin = $this;
         parent::init();
 
 
-        \Craft::$app->controllerMap['setup'] = [
+        Craft::$app->controllerMap['setup'] = [
             'class' => SetupController::class,
         ];
 
         Event::on(
             Volumes::class,
             Volumes::EVENT_REGISTER_VOLUME_TYPES,
-            function (RegisterComponentTypesEvent $event) {
+            static function (RegisterComponentTypesEvent $event) {
                 $event->types[] = Volume::class;
             }
         );
