@@ -136,7 +136,7 @@ class Volume extends FlysystemVolume
         $endpoint = App::parseEnv($this->endpoint);
 
         if(!(str_contains($endpoint, 'https') || str_contains($endpoint, 'http'))) {
-            $endpoint = 'https://' .  $endpoint;
+            $endpoint = App::parseEnv('$OBJECT_STORAGE_PROTOCOL') . '://' .  $endpoint;
         }
 
         $config = [
@@ -144,7 +144,7 @@ class Volume extends FlysystemVolume
             'region' => App::parseEnv($this->region),
             'endpoint' => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
-            'use_path_style_endpoint' => App::parseEnv('OBJECT_STORAGE_PATH_STYLE') === 'true',
+            'use_path_style_endpoint' => (boolean)App::parseEnv('$OBJECT_STORAGE_PATH_STYLE'),
             'credentials' => [
                 'key' => App::parseEnv($this->keyId),
                 'secret' => App::parseEnv($this->secret)
