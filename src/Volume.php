@@ -110,24 +110,6 @@ class Volume extends FlysystemVolume
 
     /**
      * @inheritdoc
-     */
-    public function getRootUrl(): string
-    {
-        $rootUrl = parent::getRootUrl();
-
-        if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
-            $rootUrl =  'https://' . App::parseEnv('$OBJECT_STORAGE_HOST') . '/';
-        }
-
-        if ($rootUrl && $this->subfolder) {
-            $rootUrl .= rtrim(App::parseEnv($this->subfolder), '/') . '/';
-        }
-
-        return $rootUrl;
-    }
-
-    /**
-     * @inheritdoc
      *
      * @return AwsS3Adapter
      */
@@ -136,7 +118,7 @@ class Volume extends FlysystemVolume
         $endpoint = App::parseEnv($this->endpoint);
 
         if(!(str_contains($endpoint, 'https') || str_contains($endpoint, 'http'))) {
-            $endpoint = App::parseEnv('$OBJECT_STORAGE_PROTOCOL') . '://' .  $endpoint;
+            $endpoint = 'https://' .  $endpoint;
         }
 
         $config = [
@@ -144,7 +126,7 @@ class Volume extends FlysystemVolume
             'region' => App::parseEnv($this->region),
             'endpoint' => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
-            'use_path_style_endpoint' => (boolean)App::parseEnv('$OBJECT_STORAGE_PATH_STYLE'),
+            'use_path_style_endpoint' => (boolean)App::parseEnv('$OBJECT_STORAGE_PATH_STYLE') ?? false,
             'credentials' => [
                 'key' => App::parseEnv($this->keyId),
                 'secret' => App::parseEnv($this->secret)
