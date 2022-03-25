@@ -88,6 +88,21 @@ class Volume extends FlysystemVolume
         return $rules;
     }
 
+    public function getRootUrl()
+    {
+        $host = App::parseEnv('$OBJECT_STORAGE_HOST');
+
+        if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
+            if (str_starts_with($host, 'http://')) {
+                return $host . '/';
+            }
+
+            return 'https://' . $host . '/';
+        }
+
+        return parent::getRootUrl();
+    }
+
     /**
      * @inheritdoc
      */
