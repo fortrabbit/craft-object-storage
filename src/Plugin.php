@@ -4,8 +4,15 @@ namespace fortrabbit\ObjectStorage;
 
 use Craft;
 use craft\console\controllers\SetupController;
+use craft\base\Element;
+use craft\elements\Asset;
+use craft\events\ModelEvent;
 use craft\events\RegisterComponentTypesEvent;
 use craft\services\Volumes;
+use craft\services\Fs as FsService;
+
+use fortrabbit\ObjectStorage\Handlers\AutoFocalPointHandler;
+use fortrabbit\ObjectStorage\Handlers\FileSystemTypeHandler;
 use yii\base\Event;
 
 /**
@@ -14,29 +21,27 @@ use yii\base\Event;
  */
 class Plugin extends \craft\base\Plugin
 {
-    /**
-     * @var Plugin
-     */
-    public static $plugin;
+
+    public string $schemaVersion = '2.0';
 
     /**
      * @inheritdoc
      */
     public function init()
     {
-        self::$plugin = $this;
         parent::init();
 
-
+        /**
         \Craft::$app->controllerMap['setup'] = [
             'class' => SetupController::class,
         ];
+        */
 
         Event::on(
-            Volumes::class,
-            Volumes::EVENT_REGISTER_VOLUME_TYPES,
+            FsService::class,
+            FsService::EVENT_REGISTER_FILESYSTEM_TYPES,
             function (RegisterComponentTypesEvent $event) {
-                $event->types[] = Volume::class;
+                $event->types[] = ObjectStorageFs::class;
             }
         );
     }
