@@ -23,30 +23,37 @@ class Volume extends FlysystemVolume
      * @var string Subfolder to use
      */
     public $subfolder = '';
+
     /**
      * @var string AWS key ID
      */
     public $keyId = '';
+
     /**
      * @var string AWS key secret
      */
     public $secret = '';
+
     /**
      * @var string Bucket to use
      */
     public $bucket = '';
+
     /**
      * @var string Region to use
      */
     public $region = '';
+
     /**
      * @var string Cache expiration period.
      */
     public $expires = '';
+
     /**
      * @var string API endpoint
      */
     public $endpoint = '';
+
     /**
      * @var bool Whether this is a local source or not. Defaults to false.
      */
@@ -64,8 +71,6 @@ class Volume extends FlysystemVolume
      * Get the Amazon S3 client.
      *
      * @param $config
-     *
-     * @return S3Client
      */
     protected static function client(array $config = []): S3Client
     {
@@ -75,7 +80,7 @@ class Volume extends FlysystemVolume
     /**
      * @inheritdoc
      */
-    public function rules()
+    public function rules(): array
     {
         $rules   = parent::rules();
         $rules[] = [['bucket', 'keyId', 'secret', 'endpoint'], 'required'];
@@ -86,7 +91,7 @@ class Volume extends FlysystemVolume
     /**
      * @inheritdoc
      */
-    public function getSettingsHtml()
+    public function getSettingsHtml(): ?string
     {
         return Craft::$app->getView()->renderTemplate('fortrabbit-object-storage/volumeSettings', [
             'volume' => $this,
@@ -96,7 +101,7 @@ class Volume extends FlysystemVolume
     /**
      * @inheritdoc
      */
-    public function getRootUrl()
+    public function getRootUrl(): bool|string
     {
         $rootUrl = parent::getRootUrl();
 
@@ -113,14 +118,12 @@ class Volume extends FlysystemVolume
 
     /**
      * @inheritdoc
-     *
-     * @return AwsS3Adapter
      */
-    protected function createAdapter()
+    protected function createAdapter(): \League\Flysystem\AwsS3v3\AwsS3Adapter
     {
         $endpoint = Craft::parseEnv($this->endpoint);
 
-        if (strpos($endpoint, 'https') === false) {
+        if (!str_contains($endpoint, 'https')) {
             $endpoint = 'https://' .  $endpoint;
         }
 

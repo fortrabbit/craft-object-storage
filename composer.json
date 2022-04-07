@@ -19,10 +19,13 @@
   ],
   "require": {
     "php": "^8.0",
-    "craftcms/cms": "^4.0.x-dev",
-    "craftcms/craft-flysystem": "dev-main",
-    "league/flysystem-aws-s3-v3": "^2.1.0",
+    "craftcms/cms": "^4.0.0-beta.4",
+    "league/flysystem-aws-s3-v3": "*",
     "symfony/console": "^5.1"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "^1.4",
+    "craftcms/rector": "dev-main"
   },
   "autoload": {
     "psr-4": {
@@ -37,5 +40,14 @@
   },
   "bin": [
     "bin/object-storage-init"
-  ]
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true,
+      "pestphp/pest-plugin": true
+    }
+  }
 }
