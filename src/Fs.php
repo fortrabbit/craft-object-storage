@@ -8,7 +8,6 @@ use Aws\Credentials\Credentials;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
 
 use Craft;
-use craft\behaviors\EnvAttributeParserBehavior;
 use craft\flysystem\base\FlysystemFs;
 use craft\helpers\App;
 use craft\helpers\DateTimeHelper;
@@ -25,7 +24,7 @@ use League\MimeTypeDetection\FinfoMimeTypeDetector;
  * @property mixed  $settingsHtml
  * @property string $rootUrl
  */
-class ObjectStorageFs extends FlysystemFs
+class Fs extends FlysystemFs
 {
 
     public static function displayName(): string
