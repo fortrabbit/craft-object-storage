@@ -25,7 +25,7 @@
     "symfony/console": "^5.1"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.4",
+    "craftcms/phpstan": "dev-main",
     "craftcms/rector": "dev-main"
   },
   "autoload": {
