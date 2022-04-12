@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace fortrabbit\ObjectStorage;
 
-use Aws\Credentials\Credentials;
 use Aws\Handler\GuzzleV6\GuzzleHandler;
-
 use Craft;
 use craft\flysystem\base\FlysystemFs;
 use craft\helpers\App;
@@ -58,10 +56,14 @@ class Fs extends FlysystemFs
     public string $region = '';
 
     /**
-     * @var string Cache expiration period.
+     * @var string Cache expiration period as a string, like '2 hours'
      */
     public string $expires = '';
 
+    /**
+     * @var string fortrabbit endpoint hostname
+     */
+    public string $endpoint = '';
     /**
      * @var bool Set ACL for Uploads
      */
