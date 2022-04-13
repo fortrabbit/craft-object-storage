@@ -141,7 +141,7 @@ class Volume extends FlysystemVolume
             'region' => App::parseEnv($this->region),
             'endpoint' => $endpoint,
             'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
-            'use_path_style_endpoint' => (boolean)App::parseEnv('$OBJECT_STORAGE_PATH_STYLE') ?? false,
+            'use_path_style_endpoint' => (boolean)(App::parseEnv('$OBJECT_STORAGE_PATH_STYLE') ?? false),
             'credentials' => [
                 'key' => App::parseEnv($this->keyId),
                 'secret' => App::parseEnv($this->secret)
