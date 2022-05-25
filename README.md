@@ -19,7 +19,6 @@ To install the plugin, follow these instructions.
 ```
 cd /path/to/project
 
-composer config platform --unset
 composer require fortrabbit/craft-object-storage
 ```
 
