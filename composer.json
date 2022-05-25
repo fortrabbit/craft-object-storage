@@ -1,6 +1,6 @@
 {
   "name": "fortrabbit/craft-object-storage",
-  "description": "A Craft 3 plugin that integrates with fortrabbit's S3 compatible Object Storage",
+  "description": "A Craft 4 plugin that integrates with fortrabbit's S3 compatible Object Storage",
   "type": "craft-plugin",
   "keywords": [
     "craftcms",
@@ -18,10 +18,15 @@
     }
   ],
   "require": {
-    "php": "^7.3.0|^8.0",
-    "craftcms/cms": "^3.5.15",
-    "league/flysystem-aws-s3-v3": "^1.0.18",
+    "php": "^8.0",
+    "craftcms/cms": "^4.0.0",
+    "craftcms/flysystem": "^1.0.0",
+    "league/flysystem-aws-s3-v3": "^3.0.0",
     "symfony/console": "^5.1"
+  },
+  "require-dev": {
+    "craftcms/phpstan": "dev-main",
+    "craftcms/rector": "dev-main"
   },
   "autoload": {
     "psr-4": {
@@ -36,5 +41,14 @@
   },
   "bin": [
     "bin/object-storage-init"
-  ]
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "yiisoft/yii2-composer": true,
+      "craftcms/plugin-installer": true,
+      "pestphp/pest-plugin": true
+    }
+  }
 }

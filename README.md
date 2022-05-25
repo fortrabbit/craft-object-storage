@@ -6,7 +6,7 @@ This plugin provides an [Object Storage](https://help.fortrabbit.com/object-stor
 
 ## Requirements
 
-The 2.0 branch of this plugin requires Craft CMS 3.5.15 and PHP 7.3 or later. 
+The 3.0 branch of this plugin requires Craft CMS 4.0 and PHP 8.0 or later. 
 
 
 ## Installation
@@ -19,7 +19,6 @@ To install the plugin, follow these instructions.
 ```
 cd /path/to/project
 
-composer config platform --unset
 composer require fortrabbit/craft-object-storage
 ```
 
