@@ -6,6 +6,3 @@
 *Thumbs.db
 vendor/
 composer.lock
-.phpunit.result.cache
-tests/storage
- build/phpstan

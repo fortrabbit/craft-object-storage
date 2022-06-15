@@ -5,8 +5,8 @@
     id: 'endpoint',
     name: 'endpoint',
     suggestEnvVars: true,
-    value: fs.endpoint|default('$OBJECT_STORAGE_SERVER'),
-    errors: fs.getErrors('endpoint'),
+    value: volume.endpoint|default('$OBJECT_STORAGE_SERVER'),
+    errors: volume.getErrors('endpoint'),
     placeholder: '$OBJECT_STORAGE_SERVER'|t('fortrabbit-object-storage'),
 }) }}
 
@@ -16,8 +16,8 @@
     id: 'region',
     name: 'region',
     suggestEnvVars: true,
-    value: fs.region|default('$OBJECT_STORAGE_REGION'),
-    errors: fs.getErrors('region'),
+    value: volume.region|default('$OBJECT_STORAGE_REGION'),
+    errors: volume.getErrors('region'),
     placeholder: '$OBJECT_STORAGE_REGION'|t('fortrabbit-object-storage'),
 }) }}
 
@@ -26,8 +26,8 @@
     id: 'keyId',
     name: 'keyId',
     suggestEnvVars: true,
-    value: fs.keyId|default('$OBJECT_STORAGE_KEY'),
-    errors: fs.getErrors('keyId'),
+    value: volume.keyId|default('$OBJECT_STORAGE_KEY'),
+    errors: volume.getErrors('keyId'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -35,16 +35,16 @@
     id: 'secret',
     name: 'secret',
     suggestEnvVars: true,
-    value: fs.secret|default('$OBJECT_STORAGE_SECRET'),
-    errors: fs.getErrors('secret'),
+    value: volume.secret|default('$OBJECT_STORAGE_SECRET'),
+    errors: volume.getErrors('secret'),
 }) }}
 
 {{ forms.autosuggestField({
     label: "Bucket (your App name)"|t('fortrabbit-object-storage'),
     name: 'bucket',
     suggestEnvVars: true,
-    value: fs.bucket|default('$OBJECT_STORAGE_BUCKET'),
-    errors: fs.getErrors('bucket'),
+    value: volume.bucket|default('$OBJECT_STORAGE_BUCKET'),
+    errors: volume.getErrors('bucket'),
 }) }}
 
 {{ forms.autosuggestField({
@@ -52,8 +52,8 @@
     instructions: "If you want to use a bucket’s subfolder as a Volume, specify the path to use here."|t('fortrabbit-object-storage'),
     name: 'subfolder',
     suggestEnvVars: true,
-    value: fs.subfolder,
-    errors: fs.getErrors('subfolder'),
+    value: volume.subfolder,
+    errors: volume.getErrors('subfolder'),
     placeholder: "path/to/subfolder"|t('fortrabbit-object-storage')
 }) }}
 
@@ -61,6 +61,6 @@
     label: "Expires"|t('fortrabbit-object-storage'),
     instructions: "Cache expiration period."|t('fortrabbit-object-storage'),
     name: 'expires',
-    value: fs.expires,
-    errors: fs.getErrors('expires'),
+    value: volume.expires,
+    errors: volume.getErrors('expires'),
 }) }}

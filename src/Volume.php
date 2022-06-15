@@ -168,4 +168,5 @@ class Volume extends FlysystemVolume
 
         return parent::addFileMetadataToConfig($config);
     }
+
 }
