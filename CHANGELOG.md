@@ -1,5 +1,10 @@
 Changelog
 =========
+
+## 4.0.0 - 2024-XX-XX
+* Craft 5 support
+
+
 ## 3.0.0 - 2022-05-25
 * Craft 4 and PHP 8 support
 
