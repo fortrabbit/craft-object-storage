@@ -19,7 +19,7 @@
   ],
   "require": {
     "php": "^8.0",
-    "craftcms/cms": "^5.0.0-beta",
+    "craftcms/cms": "^5.0.0",
     "craftcms/flysystem": "^2.0.0",
     "league/flysystem-aws-s3-v3": "^3.0.0",
     "symfony/console": "^6.0 | ^7.0"

@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## 4.0.0 - 2024-XX-XX
+## 4.0.0 - 2024-04-22
 * Craft 5 support
 
 
