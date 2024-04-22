@@ -6,7 +6,7 @@ This plugin provides an [Object Storage](https://help.fortrabbit.com/object-stor
 
 ## Requirements
 
-The 3.0 branch of this plugin requires Craft CMS 4.0 and PHP 8.0 or later. 
+The 4.0 release of this plugin requires Craft CMS 5 and PHP 8.0 or later. 
 
 
 ## Installation
@@ -53,9 +53,14 @@ Or browse to  CP > Settings > Plugins to enable the plugin.
 
 **4. Configure**
 
+Configure filesystems under: Settings > Filesystems >> **[New Filesystem]**.
+
+- Select `fortrabbit Object Storage` as Filesystem Type.
+- For the Base URL field use `$OBJECT_STORAGE_HOST` ENV variable. 
+All other fields are pre-configured with ENV vars already. 
+- Set a value for Expires (Cache expiration period)
+
 Configure volumes under: Settings > Assets > **[New Volume]**.  
 
-Select `fortrabbit Object Storage` as Volume Type and for the Base URL field use `$OBJECT_STORAGE_HOST` ENV variable. 
-All other fields are pre-configured with ENV vars already. 
-
+- Select the filesystem created above as the Asset Filesystem. 
 
