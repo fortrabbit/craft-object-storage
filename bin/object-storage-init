@@ -53,7 +53,8 @@ use Symfony\Component\Console\SingleCommandApplication;
 
 function getSecrets(string $app): ?array
     {
-        if ($records = dns_get_record("$app.frb.io", DNS_CNAME)) {
+        // Some resolvers (like Docker's) warn instead of returning no records for unknown names
+        if ($records = @dns_get_record("$app.frb.io", DNS_CNAME)) {
             $region = explode('.', $records[0]['target'])[1];
         }
 
