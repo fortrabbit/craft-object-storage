@@ -19,7 +19,6 @@
   ],
   "require": {
     "php": "^8.0",
-    "aws/aws-sdk-php": "^3.342.6",
     "craftcms/cms": "^5.0.0",
     "craftcms/flysystem": "^2.0.0",
     "league/flysystem-aws-s3-v3": "^3.0.0",

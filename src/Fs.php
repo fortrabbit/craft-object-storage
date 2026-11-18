@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace fortrabbit\ObjectStorage;
 
-use Aws\Handler\Guzzle\GuzzleHandler;
 use Craft;
 use craft\flysystem\base\FlysystemFs;
 use craft\helpers\App;
@@ -174,11 +173,16 @@ class Fs extends FlysystemFs
             $endpoint = 'https://' .  $endpoint;
         }
 
+        // aws/aws-sdk-php 3.342.6 deprecated the GuzzleV6 handler, older versions only have that one
+        $handler = class_exists(\Aws\Handler\Guzzle\GuzzleHandler::class)
+            ? \Aws\Handler\Guzzle\GuzzleHandler::class
+            : 'Aws\\Handler\\GuzzleV6\\GuzzleHandler';
+
         return [
             'version'      => 'latest',
             'region'       => App::parseEnv($this->region),
             'endpoint'     => $endpoint,
-            'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
+            'http_handler' => new $handler(Craft::createGuzzleClient()),
             'credentials'  => [
                 'key'    => App::parseEnv($this->keyId),
                 'secret' => App::parseEnv($this->secret)
