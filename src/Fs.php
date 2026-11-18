@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace fortrabbit\ObjectStorage;
 
-use Aws\Handler\GuzzleV6\GuzzleHandler;
+use Aws\Handler\Guzzle\GuzzleHandler;
 use Craft;
 use craft\flysystem\base\FlysystemFs;
 use craft\helpers\App;
@@ -104,7 +104,7 @@ class Fs extends FlysystemFs
         $rootUrl = parent::getRootUrl();
 
         if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
-            $rootUrl =  'https://' . Craft::parseEnv('$OBJECT_STORAGE_HOST') . '/';
+            $rootUrl =  'https://' . App::parseEnv('$OBJECT_STORAGE_HOST') . '/';
         }
 
         if ($rootUrl && $this->subfolder) {
@@ -170,7 +170,7 @@ class Fs extends FlysystemFs
     {
         $endpoint = App::parseEnv($this->endpoint);
 
-        if (!str_contains($endpoint, 'https')) {
+        if (!str_contains($endpoint, '://')) {
             $endpoint = 'https://' .  $endpoint;
         }
 
