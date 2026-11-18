@@ -22,7 +22,7 @@
     "craftcms/cms": "^4.0.0",
     "craftcms/flysystem": "^1.0.0",
     "league/flysystem-aws-s3-v3": "^3.0.0",
-    "symfony/console": "^5.1"
+    "symfony/console": "^5.1 | ^6.0 | ^7.0"
   },
   "require-dev": {
     "craftcms/phpstan": "dev-main",
