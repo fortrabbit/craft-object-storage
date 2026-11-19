@@ -3,9 +3,8 @@
   "description": "A Craft 4 plugin that integrates with fortrabbit's S3 compatible Object Storage",
   "homepage": "https://www.fortrabbit.com/software/craft-cms",
   "support": {
-    "docs": "https://github.com/fortrabbit/craft-object-storage/blob/craft4/README.md",
-    "source": "https://github.com/fortrabbit/craft-object-storage",
-    "issues": "https://github.com/fortrabbit/craft-object-storage/issues"
+    "email": "info@fortrabbit.com",
+    "docs": "https://github.com/fortrabbit/craft-object-storage/blob/craft4/README.md"
   },
   "type": "craft-plugin",
   "keywords": [
