@@ -141,7 +141,7 @@ class Fs extends FlysystemFs
      */
     protected function addFileMetadataToConfig(array $config): array
     {
-        if (DateTimeHelper::isValidIntervalString($this->expires)) {
+        if ($this->expires && $this->isValidExpires()) {
             $expires = new DateTime();
             $now = new DateTime();
             $expires->modify('+' . $this->expires);
@@ -150,6 +150,18 @@ class Fs extends FlysystemFs
         }
 
         return parent::addFileMetadataToConfig($config);
+    }
+
+    /**
+     * Invalid values are ignored. PHP 8.3+ throws instead of returning false for them.
+     */
+    private function isValidExpires(): bool
+    {
+        try {
+            return DateTimeHelper::isValidIntervalString($this->expires);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
 
