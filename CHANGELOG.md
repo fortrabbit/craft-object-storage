@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## 3.0.1 - unreleased
+## 3.0.1 - 2026-11-19
 * Fix uploads with an empty Expires setting on PHP 8.3 and later ([#26](https://github.com/fortrabbit/craft-object-storage/pull/26))
 * Allow `symfony/console` 6 and 7, so the plugin installs next to Craft Copy
 * Ignore an invalid Expires setting instead of failing the upload
