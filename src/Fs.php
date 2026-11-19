@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace fortrabbit\ObjectStorage;
 
-use Aws\Handler\GuzzleV6\GuzzleHandler;
 use Craft;
 use craft\flysystem\base\FlysystemFs;
 use craft\helpers\App;
@@ -104,7 +103,7 @@ class Fs extends FlysystemFs
         $rootUrl = parent::getRootUrl();
 
         if ($this->url === '$OBJECT_STORAGE_HOST' || $this->url === '') {
-            $rootUrl =  'https://' . Craft::parseEnv('$OBJECT_STORAGE_HOST') . '/';
+            $rootUrl =  'https://' . App::parseEnv('$OBJECT_STORAGE_HOST') . '/';
         }
 
         if ($rootUrl && $this->subfolder) {
@@ -141,7 +140,7 @@ class Fs extends FlysystemFs
      */
     protected function addFileMetadataToConfig(array $config): array
     {
-        if (DateTimeHelper::isValidIntervalString($this->expires)) {
+        if ($this->expires && $this->isValidExpires()) {
             $expires = new DateTime();
             $now = new DateTime();
             $expires->modify('+' . $this->expires);
@@ -150,6 +149,18 @@ class Fs extends FlysystemFs
         }
 
         return parent::addFileMetadataToConfig($config);
+    }
+
+    /**
+     * Invalid values are ignored. PHP 8.3+ throws instead of returning false for them.
+     */
+    private function isValidExpires(): bool
+    {
+        try {
+            return DateTimeHelper::isValidIntervalString($this->expires);
+        } catch (\Throwable) {
+            return false;
+        }
     }
 
 
@@ -170,15 +181,20 @@ class Fs extends FlysystemFs
     {
         $endpoint = App::parseEnv($this->endpoint);
 
-        if (!str_contains($endpoint, 'https')) {
+        if (!str_contains($endpoint, '://')) {
             $endpoint = 'https://' .  $endpoint;
         }
+
+        // aws/aws-sdk-php 3.342.6 deprecated the GuzzleV6 handler, older versions only have that one
+        $handler = class_exists(\Aws\Handler\Guzzle\GuzzleHandler::class)
+            ? \Aws\Handler\Guzzle\GuzzleHandler::class
+            : 'Aws\\Handler\\GuzzleV6\\GuzzleHandler';
 
         return [
             'version'      => 'latest',
             'region'       => App::parseEnv($this->region),
             'endpoint'     => $endpoint,
-            'http_handler' => new GuzzleHandler(Craft::createGuzzleClient()),
+            'http_handler' => new $handler(Craft::createGuzzleClient()),
             'credentials'  => [
                 'key'    => App::parseEnv($this->keyId),
                 'secret' => App::parseEnv($this->secret)

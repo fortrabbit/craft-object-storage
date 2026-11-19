@@ -6,3 +6,6 @@ parameters:
     paths:
         - src
         - bin
+    ignoreErrors:
+        # Fallback for aws/aws-sdk-php before 3.342.6, an alias in newer versions
+        - '#Instantiated class Aws\\Handler\\GuzzleV6\\GuzzleHandler not found#'

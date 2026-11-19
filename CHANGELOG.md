@@ -1,6 +1,21 @@
 Changelog
 =========
 
+## 4.0.1 - 2026-11-19
+* Fix uploads with an empty Expires setting on PHP 8.3 and later ([#26](https://github.com/fortrabbit/craft-object-storage/pull/26))
+* Keep `http://` endpoints, for example a local S3 compatible server
+* Replace the deprecated `Craft::parseEnv()` and `Aws\Handler\GuzzleV6\GuzzleHandler` (still used with older `aws/aws-sdk-php` versions)
+* Ignore an invalid Expires setting instead of failing the upload
+* Upload files over 100 MB with one request, fortrabbit Object Storage doesn't support multipart uploads
+* `object-storage-init` reports an unknown App without a DNS warning
+
+## 3.0.1 - 2026-11-19
+* Fix uploads with an empty Expires setting on PHP 8.3 and later ([#26](https://github.com/fortrabbit/craft-object-storage/pull/26))
+* Allow `symfony/console` 6 and 7, so the plugin installs next to Craft Copy
+* Ignore an invalid Expires setting instead of failing the upload
+* Upload files over 100 MB with one request, fortrabbit Object Storage doesn't support multipart uploads
+* `object-storage-init` reports an unknown App without a DNS warning
+
 ## 4.0.0 - 2024-04-22
 * Craft 5 support
 
