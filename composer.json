@@ -1,6 +1,12 @@
 {
   "name": "fortrabbit/craft-object-storage",
   "description": "A Craft 5 plugin that integrates with fortrabbit's S3 compatible Object Storage",
+  "homepage": "https://www.fortrabbit.com/software/craft-cms",
+  "support": {
+    "docs": "https://github.com/fortrabbit/craft-object-storage/blob/master/README.md",
+    "source": "https://github.com/fortrabbit/craft-object-storage",
+    "issues": "https://github.com/fortrabbit/craft-object-storage/issues"
+  },
   "type": "craft-plugin",
   "keywords": [
     "craftcms",
